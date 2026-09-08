@@ -79,3 +79,12 @@ describe('choosing a renderer', () => {
         expect(renderPaste('const x = 1;', 'code')).toContain('hljs-');
     });
 });
+
+describe('falling back when rendering breaks', () => {
+    it('shows the paste as plain text instead of failing', () => {
+        // A format the renderer does not know about must not throw.
+        expect(
+            renderPaste('tekst', 'onbekend' as unknown as 'plaintext'),
+        ).toBeNull();
+    });
+});

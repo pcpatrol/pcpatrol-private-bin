@@ -134,6 +134,12 @@
         content === null ? null : renderPaste(content, paste.format),
     );
 
+    const formatLabels: Record<PasteFormat, string> = {
+        plaintext: 'Platte tekst',
+        markdown: 'Markdown',
+        code: 'Code',
+    };
+
     const expiryLabel = $derived(
         paste.expiresAt === null
             ? 'Blijft staan tot hij wordt verwijderd'
@@ -195,6 +201,8 @@
             <div>
                 <h1 class="text-2xl font-semibold tracking-tight">Paste</h1>
                 <p class="mt-1 text-xs text-muted-foreground">
+                    {formatLabels[paste.format] ?? paste.format}
+                    &middot;
                     {#if burned}
                         Deze paste is zojuist vernietigd en bestaat alleen nog op dit scherm.
                     {:else}

@@ -70,12 +70,20 @@ export function renderCode(text: string): string {
  * text rather than HTML.
  */
 export function renderPaste(text: string, format: PasteFormat): string | null {
-    switch (format) {
-        case 'markdown':
-            return renderMarkdown(text);
-        case 'code':
-            return renderCode(text);
-        default:
-            return null;
+    try {
+        switch (format) {
+            case 'markdown':
+                return renderMarkdown(text);
+            case 'code':
+                return renderCode(text);
+            default:
+                return null;
+        }
+    } catch (failure) {
+        // Never let a rendering problem hide the paste: fall back to showing it
+        // as plain text, and leave a trace so the cause can be found.
+        console.error(`Kon de paste niet als ${format} weergeven:`, failure);
+
+        return null;
     }
 }

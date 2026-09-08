@@ -176,3 +176,14 @@ test('pruning removes expired pastes and keeps the rest', function () {
     $this->assertDatabaseHas('pastes', ['id' => $live->id]);
     $this->assertDatabaseHas('pastes', ['id' => $permanent->id]);
 });
+
+test('the chosen format survives from storing to reading', function (string $format) {
+    $id = $this->postJson(route('paste.store'), pastePayload(['format' => $format]))
+        ->assertCreated()
+        ->json('id');
+
+    expect(Paste::query()->findOrFail($id)->format)->toBe($format);
+
+    $this->get(route('paste.show', $id))
+        ->assertInertia(fn (Assert $page) => $page->where('paste.format', $format));
+})->with(['plaintext', 'markdown', 'code']);
