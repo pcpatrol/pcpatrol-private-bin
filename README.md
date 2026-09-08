@@ -1,22 +1,47 @@
 # PC Patrol Private Bin
 
-Laravel-applicatie op basis van de officiële Laravel Svelte starter kit. Deze repository bevat
-de initiële installatie: de applicatie draait volledig in Docker via Laravel Sail met MySQL.
+Een zelf gehoste pastebin waarin de server de inhoud niet kan lezen, in de huisstijl van
+PC Patrol. Gebouwd op de Laravel Svelte starter kit en draaiend in Docker via Laravel Sail
+met MySQL.
 
-Op dit moment staat alleen de basis klaar (welkomstpagina, dashboard en de authenticatie uit de
-starter kit). De functionaliteit van Private Bin moet nog gebouwd worden.
+## Hoe de versleuteling werkt
+
+Alles gebeurt in de browser van de bezoeker:
+
+1. De browser maakt een willekeurige sleutel van 256 bit.
+2. Die sleutel wordt samen met een eventueel wachtwoord via PBKDF2-SHA256 (310.000 rondes,
+   eigen salt) uitgerekt tot een AES-256-GCM-sleutel.
+3. De tekst wordt daarmee versleuteld. Alleen het versleutelde resultaat gaat naar de server.
+4. De sleutel komt achter het `#` in de deel-link te staan. Browsers sturen dat deel van een
+   URL nooit mee, dus de server krijgt hem nooit te zien.
+
+De weergavevorm en de "vernietigen na lezen"-vlag worden als _additional authenticated data_
+meeversleuteld. Een server die daaraan sleutelt laat het ontsleutelen mislukken in plaats van
+dat het onopgemerkt blijft.
+
+Wat dit wel en niet biedt: wie de link heeft, kan de paste lezen. De beveiliging zit in het
+geheim houden van de link, niet in een account. Wie de server beheert kan een paste wel
+verwijderen, maar niet uitlezen.
+
+## Functies
+
+- Vervaltermijn van 5 minuten tot nooit, met een uurlijkse opruimtaak
+- Vernietigen na lezen, met een bevestigingsscherm zodat een linkvoorbeeld de paste niet wist
+- Optioneel extra wachtwoord bovenop de sleutel in de link
+- Weergave als platte tekst, Markdown of code met syntax highlighting
+- Eigen verwijderlink voor de maker, met een token dat alleen als hash wordt bewaard
 
 ## Stack
 
-| Onderdeel | Versie |
-| --- | --- |
-| PHP | 8.4 |
-| Laravel | 13 |
-| Inertia | 3 |
-| Svelte | 5 |
-| Tailwind CSS | 4 |
-| MySQL | 8.4 |
-| Auth | Laravel Fortify (incl. 2FA en passkeys) |
+| Onderdeel    | Versie                                  |
+| ------------ | --------------------------------------- |
+| PHP          | 8.4                                     |
+| Laravel      | 13                                      |
+| Inertia      | 3                                       |
+| Svelte       | 5                                       |
+| Tailwind CSS | 4                                       |
+| MySQL        | 8.4                                     |
+| Auth         | Laravel Fortify (incl. 2FA en passkeys) |
 
 Verder in gebruik: Wayfinder (getypeerde route-functies voor de frontend), Pest voor tests,
 Pint voor code-style en Larastan (level 7) voor statische analyse.
@@ -55,11 +80,11 @@ De applicatie draait daarna op **http://localhost:8001**.
 De standaardpoorten van Sail zijn aangepast, zodat dit project naast de andere Sail-projecten
 op dezelfde machine kan draaien:
 
-| Dienst | Host-poort | Instelling in `.env` |
-| --- | --- | --- |
-| Applicatie | 8001 | `APP_PORT` |
-| Vite dev server | 5175 | `VITE_PORT` |
-| MySQL | 3308 | `FORWARD_DB_PORT` |
+| Dienst          | Host-poort | Instelling in `.env` |
+| --------------- | ---------- | -------------------- |
+| Applicatie      | 8001       | `APP_PORT`           |
+| Vite dev server | 5175       | `VITE_PORT`          |
+| MySQL           | 3308       | `FORWARD_DB_PORT`    |
 
 Draai je dit project als enige, dan kun je die waarden gerust terugzetten naar 8000, 5173 en 3306.
 Pas `APP_URL` dan mee aan.
@@ -93,8 +118,9 @@ Sail draait de tests tegen de aparte `testing`-database, die de MySQL-container 
 aanmaken automatisch voor je klaarzet.
 
 ```bash
-./vendor/bin/sail test                  # volledige testsuite
+./vendor/bin/sail test                  # volledige PHP-testsuite
 ./vendor/bin/sail test --filter=naam    # één test
+npx vp test                             # tests van de versleuteling in de browser
 ./vendor/bin/sail composer lint         # code-style corrigeren (Pint)
 ./vendor/bin/sail composer types:check  # statische analyse (Larastan)
 npm run types:check                     # TypeScript- en Svelte-check
@@ -106,12 +132,14 @@ achter elkaar uit. Dat is dezelfde controle die CI draait.
 ## Projectstructuur
 
 ```
-app/                     Applicatiecode (controllers, models, Fortify-acties)
-resources/js/pages/      Svelte-pagina's, gekoppeld via Inertia::render / Route::inertia
-resources/js/components/ Herbruikbare Svelte-componenten
-routes/web.php           Webroutes
-routes/settings.php      Routes voor profiel- en beveiligingsinstellingen
-database/migrations/     Migraties
-tests/Feature/           Feature-tests (Pest)
-compose.yaml             Sail-servicedefinities (app + MySQL)
+app/Http/Controllers/PasteController.php  Opslaan, tonen, vrijgeven en verwijderen
+app/Models/Paste.php                     Het versleutelde record
+app/Console/Commands/PrunePastes.php     Ruimt verlopen pastes op
+config/paste.php                         Vervaltermijnen en maximale omvang
+resources/js/lib/paste-crypto.ts         Versleuteling in de browser
+resources/js/lib/paste-render.ts         Markdown en code, gesaneerd
+resources/js/pages/paste/                Schrijven, lezen en verwijderen
+resources/js/layouts/PasteLayout.svelte  Huisstijl-omlijsting
+tests/Feature/PasteTest.php              Server-side gedrag (Pest)
+compose.yaml                             Sail-services (app + MySQL)
 ```

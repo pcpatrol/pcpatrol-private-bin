@@ -13,6 +13,29 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
+    --font-mono:
+        ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* PC Patrol brand palette, taken from pcpatrol.nl */
+    --color-ink: #16150f;
+    --color-ink-soft: #2e2a1e;
+    --color-body: #5a554a;
+    --color-cream: #f8f5ee;
+    --color-line: #e5e0d3;
+    --color-line-soft: #ede8dc;
+    --color-line-strong: #ddd7c8;
+    --color-lime: #a6e000;
+    --color-lime-bright: #b8f226;
+    --color-lime-deep: #4a7a12;
+    --color-lime-pale: #eefbce;
+    --color-alert: #d94f3d;
+    --color-warn: #d9a441;
+    --color-on-dark: #c3bdaf;
+    --color-on-dark-strong: #d6d1c4;
+    --color-on-dark-muted: #8f8a7d;
+
+    --radius-card: 14px;
+
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -90,76 +113,76 @@
 }
 
 :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 45.1%);
-    --accent: hsl(0 0% 96.1%);
-    --accent-foreground: hsl(0 0% 9%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(0 0% 89.8%);
-    --ring: hsl(0 0% 3.9%);
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
-    --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --background: #f8f5ee;
+    --foreground: #16150f;
+    --card: #ffffff;
+    --card-foreground: #16150f;
+    --popover: #ffffff;
+    --popover-foreground: #16150f;
+    --primary: #a6e000;
+    --primary-foreground: #16150f;
+    --secondary: #ede8dc;
+    --secondary-foreground: #2e2a1e;
+    --muted: #ede8dc;
+    --muted-foreground: #6e6961;
+    --accent: #eefbce;
+    --accent-foreground: #4a7a12;
+    --destructive: #d94f3d;
+    --destructive-foreground: #ffffff;
+    --border: #e5e0d3;
+    --input: #ddd7c8;
+    --ring: #a6e000;
+    --chart-1: #a6e000;
+    --chart-2: #4a7a12;
+    --chart-3: #d9a441;
+    --chart-4: #6e6961;
+    --chart-5: #d94f3d;
+    --radius: 0.625rem;
+    --sidebar-background: #f3efe5;
+    --sidebar-foreground: #2e2a1e;
+    --sidebar-primary: #16150f;
+    --sidebar-primary-foreground: #f8f5ee;
+    --sidebar-accent: #eefbce;
+    --sidebar-accent-foreground: #4a7a12;
+    --sidebar-border: #e5e0d3;
+    --sidebar-ring: #a6e000;
+    --sidebar: #f3efe5;
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(0 0% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 9%);
-    --secondary: hsl(0 0% 14.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
-    --accent: hsl(0 0% 14.9%);
-    --accent-foreground: hsl(0 0% 98%);
-    --destructive: hsl(0 84% 60%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 14.9%);
-    --input: hsl(0 0% 14.9%);
-    --ring: hsl(0 0% 83.1%);
-    --chart-1: hsl(220 70% 50%);
-    --chart-2: hsl(160 60% 45%);
-    --chart-3: hsl(30 80% 55%);
-    --chart-4: hsl(280 65% 60%);
-    --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0 0% 100%);
-    --sidebar-accent: hsl(0 0% 15.9%);
-    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-    --sidebar-border: hsl(0 0% 15.9%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(240 5.9% 10%);
+    --background: #0b0c08;
+    --foreground: #d6d1c4;
+    --card: #16150f;
+    --card-foreground: #d6d1c4;
+    --popover: #16150f;
+    --popover-foreground: #d6d1c4;
+    --primary: #a6e000;
+    --primary-foreground: #16150f;
+    --secondary: #1e1d14;
+    --secondary-foreground: #d6d1c4;
+    --muted: #1e1d14;
+    --muted-foreground: #8f8a7d;
+    --accent: #34400f;
+    --accent-foreground: #eefbce;
+    --destructive: #d94f3d;
+    --destructive-foreground: #ffffff;
+    --border: #2e2a1e;
+    --input: #2e2a1e;
+    --ring: #a6e000;
+    --chart-1: #a6e000;
+    --chart-2: #b8f226;
+    --chart-3: #d9a441;
+    --chart-4: #8f8a7d;
+    --chart-5: #d94f3d;
+    --sidebar-background: #101009;
+    --sidebar-foreground: #c3bdaf;
+    --sidebar-primary: #a6e000;
+    --sidebar-primary-foreground: #16150f;
+    --sidebar-accent: #1e1d14;
+    --sidebar-accent-foreground: #eefbce;
+    --sidebar-border: #2e2a1e;
+    --sidebar-ring: #a6e000;
+    --sidebar: #101009;
 }
 
 @layer base {
@@ -169,4 +192,183 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/*
+  Styling for a rendered paste: Markdown output and highlighted code. The token
+  colours are brand tones that stay readable on the card background in both the
+  light and the dark theme.
+*/
+:root {
+    --code-keyword: #9a2617;
+    --code-string: #4a7a12;
+    --code-comment: #6e6961;
+    --code-number: #8a5a12;
+    --code-title: #2e2a1e;
+}
+
+.dark {
+    --code-keyword: #e8836f;
+    --code-string: #b8f226;
+    --code-comment: #8f8a7d;
+    --code-number: #d9a441;
+    --code-title: #d6d1c4;
+}
+
+.paste-rendered > :first-child {
+    margin-top: 0;
+}
+
+.paste-rendered > :last-child {
+    margin-bottom: 0;
+}
+
+.paste-rendered h1,
+.paste-rendered h2,
+.paste-rendered h3,
+.paste-rendered h4,
+.paste-rendered h5,
+.paste-rendered h6 {
+    margin-block: 1.5em 0.5em;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.paste-rendered h1 {
+    font-size: 1.5em;
+}
+
+.paste-rendered h2 {
+    font-size: 1.25em;
+}
+
+.paste-rendered h3 {
+    font-size: 1.1em;
+}
+
+.paste-rendered p,
+.paste-rendered ul,
+.paste-rendered ol,
+.paste-rendered blockquote,
+.paste-rendered pre,
+.paste-rendered table {
+    margin-block: 0.75em;
+}
+
+.paste-rendered ul,
+.paste-rendered ol {
+    padding-left: 1.5em;
+}
+
+.paste-rendered ul {
+    list-style: disc;
+}
+
+.paste-rendered ol {
+    list-style: decimal;
+}
+
+.paste-rendered li {
+    margin-block: 0.25em;
+}
+
+.paste-rendered a {
+    color: var(--color-lime-deep);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.dark .paste-rendered a {
+    color: var(--color-lime-bright);
+}
+
+.paste-rendered blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 1em;
+    color: var(--muted-foreground);
+}
+
+.paste-rendered code {
+    background: var(--secondary);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.35em;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.paste-rendered pre {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    background: var(--secondary);
+    padding: 1em;
+}
+
+.paste-rendered pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.875em;
+}
+
+.paste-rendered hr {
+    margin-block: 1.5em;
+    border-top: 1px solid var(--border);
+}
+
+.paste-rendered table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.paste-rendered th,
+.paste-rendered td {
+    border: 1px solid var(--border);
+    padding: 0.4em 0.6em;
+    text-align: left;
+}
+
+.paste-rendered th {
+    background: var(--secondary);
+    font-weight: 600;
+}
+
+/* Syntax highlighting tokens produced by highlight.js. */
+.paste-rendered .hljs-keyword,
+.paste-rendered .hljs-selector-tag,
+.paste-rendered .hljs-literal,
+.paste-rendered .hljs-doctag {
+    color: var(--code-keyword);
+}
+
+.paste-rendered .hljs-string,
+.paste-rendered .hljs-regexp,
+.paste-rendered .hljs-addition {
+    color: var(--code-string);
+}
+
+.paste-rendered .hljs-comment,
+.paste-rendered .hljs-quote,
+.paste-rendered .hljs-meta {
+    color: var(--code-comment);
+    font-style: italic;
+}
+
+.paste-rendered .hljs-number,
+.paste-rendered .hljs-symbol,
+.paste-rendered .hljs-attr,
+.paste-rendered .hljs-attribute {
+    color: var(--code-number);
+}
+
+.paste-rendered .hljs-title,
+.paste-rendered .hljs-name,
+.paste-rendered .hljs-built_in,
+.paste-rendered .hljs-type,
+.paste-rendered .hljs-section {
+    color: var(--code-title);
+    font-weight: 600;
+}
+
+.paste-rendered .hljs-deletion {
+    color: var(--destructive);
 }
