@@ -237,6 +237,20 @@
                 </div>
             </div>
 
+            <p class="text-xs text-muted-foreground">
+                {#if format === 'markdown'}
+                    Standaard Markdown, dus let op de spatie:
+                    <code class="rounded bg-secondary px-1 py-0.5 font-mono">### Kop</code>,
+                    <code class="rounded bg-secondary px-1 py-0.5 font-mono">**vet**</code>
+                    of
+                    <code class="rounded bg-secondary px-1 py-0.5 font-mono">- lijst</code>.
+                {:else if format === 'code'}
+                    De programmeertaal wordt automatisch herkend en gekleurd.
+                {:else}
+                    De tekst wordt precies zo getoond als je hem typt.
+                {/if}
+            </p>
+
             <div class="space-y-2">
                 <Label for="paste-password">Extra wachtwoord (optioneel)</Label>
                 <Input
