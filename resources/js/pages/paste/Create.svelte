@@ -10,6 +10,7 @@
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import { encodeKey, encryptPaste, generateKey, type PasteFormat } from '@/lib/paste-crypto';
+    import { renderPaste } from '@/lib/paste-render';
     import { toUrl } from '@/lib/utils';
     import { store } from '@/routes/paste';
 
@@ -72,8 +73,10 @@
     let failure = $state('');
     let result = $state<{ shareUrl: string; deleteUrl: string } | null>(null);
     let copied = $state(false);
+    let showPreview = $state(false);
 
     const canSubmit = $derived(text.trim().length > 0 && !busy);
+    const previewHtml = $derived(renderPaste(text, format));
 
     async function submit(event: SubmitEvent): Promise<void> {
         event.preventDefault();
@@ -198,15 +201,58 @@
 
         <form onsubmit={submit} class="space-y-6">
             <div class="space-y-2">
-                <Label for="paste-text">Tekst</Label>
-                <textarea
-                    id="paste-text"
-                    bind:value={text}
-                    rows="14"
-                    spellcheck="false"
-                    placeholder="Plak of typ hier wat je wilt delen..."
-                    class="flex w-full rounded-md border border-input bg-card px-3 py-2 font-mono text-sm shadow-sm transition-colors placeholder:font-sans placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
-                ></textarea>
+                <div class="flex items-center justify-between gap-4">
+                    <Label for="paste-text">Tekst</Label>
+                    <div class="flex items-center gap-1 text-xs">
+                        <button
+                            type="button"
+                            onclick={() => (showPreview = false)}
+                            class="rounded px-2 py-1 font-medium transition-colors {!showPreview
+                                ? 'bg-secondary text-foreground'
+                                : 'text-muted-foreground hover:text-foreground'}"
+                        >
+                            Schrijven
+                        </button>
+                        <button
+                            type="button"
+                            onclick={() => (showPreview = true)}
+                            class="rounded px-2 py-1 font-medium transition-colors {showPreview
+                                ? 'bg-secondary text-foreground'
+                                : 'text-muted-foreground hover:text-foreground'}"
+                        >
+                            Voorbeeld
+                        </button>
+                    </div>
+                </div>
+
+                {#if showPreview}
+                    {#if text.trim().length === 0}
+                        <div
+                            class="flex min-h-[298px] w-full items-center justify-center rounded-md border border-input bg-card text-sm text-muted-foreground"
+                        >
+                            Er is nog niets om te tonen.
+                        </div>
+                    {:else if previewHtml !== null}
+                        <!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitised in paste-render -->
+                        <div
+                            class="paste-rendered min-h-[298px] w-full overflow-x-auto rounded-md border border-input bg-card px-3 py-2 text-sm leading-relaxed"
+                        >
+                            {@html previewHtml}
+                        </div>
+                    {:else}
+                        <pre
+                            class="min-h-[298px] w-full overflow-x-auto rounded-md border border-input bg-card px-3 py-2 font-mono text-sm leading-relaxed whitespace-pre-wrap">{text}</pre>
+                    {/if}
+                {:else}
+                    <textarea
+                        id="paste-text"
+                        bind:value={text}
+                        rows="14"
+                        spellcheck="false"
+                        placeholder="Plak of typ hier wat je wilt delen..."
+                        class="flex w-full rounded-md border border-input bg-card px-3 py-2 font-mono text-sm shadow-sm transition-colors placeholder:font-sans placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+                    ></textarea>
+                {/if}
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
